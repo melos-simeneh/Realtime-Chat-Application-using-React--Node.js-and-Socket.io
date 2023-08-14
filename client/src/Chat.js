@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+import ScrollToBottom from "react-scroll-to-bottom";
 
 const Chat = ({ socket, username, room }) => {
   const [message, setMessage] = useState("");
@@ -18,7 +19,7 @@ const Chat = ({ socket, username, room }) => {
     setMessage("");
   };
 
-  useEffect(() => {
+  useMemo(() => {
     socket.on("receive_message", (data) => {
       setMessageList((pre) => [...pre, data]);
     });
@@ -30,29 +31,35 @@ const Chat = ({ socket, username, room }) => {
         <p>Live Chat</p>
       </div>
       <div className="chat-body">
-        {messageList.map((msg) => {
-          return (
-            <div
-              className="message"
-              id={username === msg.username ? "you" : "other"}
-            >
-              <div>
-                <div className="message-content">
-                  <p>{msg.message}</p>
-                </div>
-                <div className="message-meta">
-                  <p>{msg.time}</p>
-                  <p>{msg.username}</p>
+        <ScrollToBottom className="message-container">
+          {messageList.map((msg) => {
+            return (
+              <div
+                className="message"
+                id={username !== msg.username ? "you" : "other"}
+              >
+                <div>
+                  <div className="message-content">
+                    <p>{msg.message}</p>
+                  </div>
+                  <div className="message-meta">
+                    <p id="time">{msg.time}</p>
+                    <p id="author">{msg.username}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </ScrollToBottom>
       </div>
       <div className="chat-footer">
         <input
           placeholder="message"
+          value={message}
           onChange={(event) => setMessage(event.target.value)}
+          onKeyDown={(event) => {
+            event.key === "Enter" && sendMessage();
+          }}
         />
         <button onClick={sendMessage}>&#9658;</button>
       </div>
