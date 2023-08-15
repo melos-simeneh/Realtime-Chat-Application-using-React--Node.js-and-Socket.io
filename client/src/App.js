@@ -5,6 +5,7 @@ import Chat from "./Chat";
 
 const socket = io.connect("http://localhost:8000");
 function App() {
+  const [usernames, setUsernames] = useState([]);
   const [username, setUsername] = useState("");
   const [room, setRoom] = useState("");
   const [showChat, setShowChat] = useState(false);
