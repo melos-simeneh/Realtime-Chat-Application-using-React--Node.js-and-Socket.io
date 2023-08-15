@@ -6,8 +6,6 @@ import { useForm } from "react-hook-form";
 
 const socket = io.connect("http://localhost:8000");
 function App() {
-  // const [username, setUsername] = useState("");
-  // const [room, setRoom] = useState("");
   const [showChat, setShowChat] = useState(false);
 
   const {
@@ -17,17 +15,17 @@ function App() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async (data) => {
-    // socket.emit("join_room", data.roomId);
-    await socket.emit("join_room", "world", (err, response) => {
-      if (err) {
-        // the other side did not acknowledge the event in the given delay
-        alert();
-      } else {
-        console.log("cccc", response); // "got it"
-      }
-    });
-    setShowChat(true);
+  const onSubmit = (data) => {
+    try {
+      socket.emit("join_room", data);
+      setShowChat(true);
+    } catch (error) {
+      return (
+        <div>
+          <p>Something went wrong</p>
+        </div>
+      );
+    }
   };
 
   return (

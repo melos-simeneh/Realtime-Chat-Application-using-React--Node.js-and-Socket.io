@@ -12,15 +12,17 @@ const io = new Server(server, {
     methods: ["GET", "POST"],
   },
 });
-
+let activeUsers = [];
 io.on("connection", (socket) => {
-  console.log(`User connected ${socket.io}`);
   socket.on("join_room", (data) => {
     socket.join(data);
-    console.log(`User with ID: ${socket.id} joined room:${data}`);
+    activeUsers.push(data.username);
+    console.log(`User with ID: ${socket.id} joined room:${data.roomId}`);
   });
   socket.on("send_message", (data) => {
     console.log(data);
+    // data = { ...data, activeUsers };
+    // console.log(data);
     socket.to(data.room).emit("receive_message", data);
   });
   socket.on("disconnect", () => {
