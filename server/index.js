@@ -12,15 +12,9 @@ const io = new Server(server, {
     methods: ["GET", "POST"],
   },
 });
-let activeUsers = [];
 io.on("connection", (socket) => {
   socket.on("join_room", (data) => {
     socket.join(data.roomId);
-    const id = socket.id;
-    const { username, roomId } = data;
-    user = { id, username, roomId };
-    activeUsers.push(user);
-
     console.log(`User with ID: ${socket.id} joined room:${data.roomId}`);
   });
   socket.on("send_message", (data) => {
