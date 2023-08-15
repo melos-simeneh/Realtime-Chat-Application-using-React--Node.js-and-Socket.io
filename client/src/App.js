@@ -4,7 +4,7 @@ import io from "socket.io-client";
 import Chat from "./Chat";
 import { useForm } from "react-hook-form";
 
-const socket = io("http://localhost:8000");
+const socket = io.connect("http://localhost:8000");
 function App() {
   // const [username, setUsername] = useState("");
   // const [room, setRoom] = useState("");
