@@ -15,14 +15,13 @@ const io = new Server(server, {
 let activeUsers = [];
 io.on("connection", (socket) => {
   socket.on("join_room", (data) => {
-    socket.join(data);
-    activeUsers.push(data.username);
+    socket.join(data.roomId);
+    activeUsers.push(data);
     console.log(`User with ID: ${socket.id} joined room:${data.roomId}`);
   });
   socket.on("send_message", (data) => {
     console.log(data);
-    // data = { ...data, activeUsers };
-    // console.log(data);
+    data = { ...data, activeUsers };
     socket.to(data.room).emit("receive_message", data);
   });
   socket.on("disconnect", () => {

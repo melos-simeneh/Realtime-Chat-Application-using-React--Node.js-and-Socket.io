@@ -16,16 +16,8 @@ function App() {
   } = useForm();
 
   const onSubmit = (data) => {
-    try {
-      socket.emit("join_room", data);
-      setShowChat(true);
-    } catch (error) {
-      return (
-        <div>
-          <p>Something went wrong</p>
-        </div>
-      );
-    }
+    socket.emit("join_room", data);
+    setShowChat(true);
   };
 
   return (
@@ -65,6 +57,7 @@ function App() {
                 <p>Room ID cannot exceed 6 characters</p>
               )}
             </div>
+
             <input
               placeholder="Username"
               {...register("username", {
