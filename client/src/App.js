@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import "./app.css";
 import io from "socket.io-client";
 import Chat from "./Chat";
@@ -7,7 +7,6 @@ import { useForm } from "react-hook-form";
 const socket = io.connect("http://localhost:8000");
 function App() {
   const [showChat, setShowChat] = useState(false);
-  const [activeUsers, setActiveUsers] = useState([]);
   const {
     register,
     handleSubmit,
@@ -83,8 +82,6 @@ function App() {
           socket={socket}
           room={watch("roomId")}
           username={watch("username")}
-          activeUsers={activeUsers}
-          setActiveUsers={setActiveUsers}
         />
       )}
     </div>

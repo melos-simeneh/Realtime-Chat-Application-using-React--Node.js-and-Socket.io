@@ -12,9 +12,11 @@ const io = new Server(server, {
     methods: ["GET", "POST"],
   },
 });
+let activeUsers = [];
 io.on("connection", (socket) => {
   socket.on("join_room", (data) => {
     socket.join(data.roomId);
+
     console.log(`User with ID: ${socket.id} joined room:${data.roomId}`);
   });
   socket.on("send_message", (data) => {
