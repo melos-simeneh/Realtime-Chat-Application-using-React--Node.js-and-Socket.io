@@ -16,14 +16,18 @@ let activeUsers = [];
 io.on("connection", (socket) => {
   socket.on("join_room", (data) => {
     socket.join(data.roomId);
-    activeUsers.push(data);
+    const id = socket.id;
+    const { username, roomId } = data;
+    user = { id, username, roomId };
+    activeUsers.push(user);
+
     console.log(`User with ID: ${socket.id} joined room:${data.roomId}`);
   });
   socket.on("send_message", (data) => {
     console.log(data);
-    data = { ...data, activeUsers };
     socket.to(data.room).emit("receive_message", data);
   });
+
   socket.on("disconnect", () => {
     console.log("User Disconnected", socket.id);
   });
