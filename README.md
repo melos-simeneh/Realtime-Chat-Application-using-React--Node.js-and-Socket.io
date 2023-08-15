@@ -13,7 +13,7 @@ To run the server/node server follow this steps:
 1. open terminal
 2. cd to server folder
 3. run `node index.js` or `npm start` if you installed nodemon\
-    Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+    Open [http://localhost:8000](http://localhost:8000) to view it in your browser.
 
 ### Client
 
@@ -22,7 +22,7 @@ To install dependencies:
 2. cd to server folder
 3. run `npm i` or `npm install` 
 
-To run the react app follow this steps:\
+To run the react app follow this steps:
 1. open terminal
 2. cd to client folder
 3. run `npm start`\
